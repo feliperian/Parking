@@ -4,3 +4,13 @@ services:
     build: .
     volumes:
       - ./src:/usr/src
+    environment:
+      PARKING-API_DATABASE_USERNAME: postgres
+      PARKING-API_DATABASE_PASSWORD: postgres
+      PARKING-API_DATABASE_HOST: db
+      PARKING-API_DATABASE_PORT: 5432
+  db:
+    image: postgres:9.6.15
+    environment:
+      POSTGRES_USER: parking-api
+      POSTGRES_PASSWORD: postgres
