@@ -6,3 +6,7 @@ Simple parking control design according to mLabs [backend test](https://github.c
 - Check in, check out and pay
 - Validate payment to sign out
 - Show history by plate
+
+## Requirements
+- [Docker](https://docs.docker.com/) 19.03.0+
+- [Docker Compose](https://docs.docker.com/compose/) 1.24.1+
