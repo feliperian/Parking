@@ -5,23 +5,23 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # Ignore bundler config.
-/src/parking-api/.bundle
+/src/.bundle
 
 # Ignore the default SQLite database.
-/src/parking-api/db/*.sqlite3
-/src/parking-api/db/*.sqlite3-journal
+/src/db/*.sqlite3
+/src/db/*.sqlite3-journal
 
 # Ignore all logfiles and tempfiles.
-/src/parking-api/log/*
-/src/parking-api/tmp/*
-!/src/parking-api/log/.keep
-!/src/parking-api/tmp/.keep
+/src/log/*
+/src/tmp/*
+!/src/log/.keep
+!/src/tmp/.keep
 
 # Ignore uploaded files in development
-/src/parking-api/storage/*
-!/src/parking-api/storage/.keep
+/src/storage/*
+!/src/storage/.keep
 
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.
-/src/parking-api/config/master.key
+/src/config/master.key
