@@ -14,3 +14,7 @@ Simple parking control design according to mLabs [backend test](https://github.c
 
 ## About
 This is a project built with Rails.
+
+## Development
+Start server:
+```docker-compose up```
