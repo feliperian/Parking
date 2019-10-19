@@ -5,12 +5,14 @@ services:
     volumes:
       - ./src:/usr/src
     environment:
-      PARKING-API_DATABASE_USERNAME: postgres
-      PARKING-API_DATABASE_PASSWORD: postgres
+      PARKING-API_DATABASE_USERNAME: parking-api
+      PARKING-API_DATABASE_PASSWORD: parking-api
       PARKING-API_DATABASE_HOST: db
       PARKING-API_DATABASE_PORT: 5432
   db:
     image: postgres:9.6.15
+    volumes:
+      ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
     environment:
       POSTGRES_USER: parking-api
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: parking-api
