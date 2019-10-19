@@ -9,4 +9,4 @@ ENV RAILS_VERSION 5.2.3
 
 RUN gem install rails --version "$RAILS_VERSION"
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src

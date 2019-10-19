@@ -3,4 +3,4 @@ services:
   parking:
     build: .
     volumes:
-      - ./app:/usr/src/app
+      - ./src:/usr/src
