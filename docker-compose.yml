@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+  parking:
+    build: .
+    command: rails server -b 0.0.0.0
+    volumes:
+      - ./src:/usr/src
+    ports:
+      - 80:3000
+    environment:
+      PARKINGAPI_DATABASE_USERNAME: postgres
+      PARKINGAPI_DATABASE_PASSWORD: postgres
+      PARKINGAPI_DATABASE_HOST: db
+      PARKINGAPI_DATABASE_PORT: 5432
+    depends_on:
+      - db
+  db:
+    image: postgres:9.6.15
+    volumes:
+      - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
