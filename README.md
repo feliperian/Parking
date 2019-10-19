@@ -16,5 +16,14 @@ Simple parking control design according to mLabs [backend test](https://github.c
 This is a project built with Rails.
 
 ## Development
+
+Running tests:
+
+```docker-compose run parking rails db:migrate```
+
 Start server:
+
 ```docker-compose up```
+
+Running tests:
+```docker-compose run parking bundle exec rspec```
