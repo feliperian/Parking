@@ -34,9 +34,9 @@ RSpec.describe 'Parking API', type: :request do
   # Test suite for PUT /parking/:id/out
   describe 'PUT /parking/:id/out' do    
     context 'when the plate has paid' do
-      let(:parking_paid) { 1 }
+      let(:parking_paid) { create(:parking, paid: true) }
 
-      before { put "/parking/#{parking_paid}/out" }
+      before { put "/parking/#{parking_paid.id}/out" }
 
       it 'registry the exit' do
         expect(json['output']).to be_a(String)
@@ -48,9 +48,9 @@ RSpec.describe 'Parking API', type: :request do
     end
 
     context 'when the plate payment is pending' do
-      let(:parking_pending) { 2 }
-    
-      before { put "/parking/#{parking_pending}/out" }
+      let(:parking_pending) { create(:parking, paid: false) }
+
+      before { put "/parking/#{parking_pending.id}/out" }
 
       it 'not registry the exit' do
         expect(json['detail']).to eq('Payment is pending')
@@ -66,9 +66,9 @@ RSpec.describe 'Parking API', type: :request do
   # Test suite for PUT /parking/:id/pay
   describe 'PUT /parking/:id/pay' do
     context 'when the plate payment is pending' do
-      let(:parking_pending) { 2 }
+      let(:parking_pending) { create(:parking, paid: false) }
 
-      before { put "/parking/#{parking_pending}/pay" }
+      before { put "/parking/#{parking_pending.id}/pay" }
 
       it 'registry the payment' do
         expect(json['paid']).to eq(true)
@@ -80,9 +80,9 @@ RSpec.describe 'Parking API', type: :request do
     end
 
     context 'when the plate has paid' do
-      let(:parking_paid) { 1 }
+      let(:parking_paid) { create(:parking, paid: true) }
 
-      before { put "/parking/#{parking_paid}/pay" }
+      before { put "/parking/#{parking_paid.id}/pay" }
 
       it 'not registry the payment' do
         expect(json['detail']).to eq('Payment was made previously')
@@ -97,13 +97,17 @@ RSpec.describe 'Parking API', type: :request do
   # Test suite for GET /parking/:plate
   describe 'GET /parking/:plate' do
     context 'when the plate has registry' do
-      let(:plate) { 'AAA-9999' }
+      let(:parking) { create(:parking) }
 
-      before { get "/parking/#{plate}" }
+      for i in 0..5
+        let(:history) { create(:parking, plate: parking.plate) }
+      end
+
+      before { get "/parking/#{parking.plate}" }
 
       it 'returns registry' do
         expect(json).not_to be_empty
-        expect(json.size).to eq(10)
+        expect(json.size).to eq(5)
       end
 
       it 'returns status code 200' do
