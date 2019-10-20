@@ -5,7 +5,8 @@ end
 FactoryGirl.define do
   factory :parking do
     plate     { random_plate }
-    output  { Faker::Date.forward(10) }
+    input  { Faker::Date.backward(days: 10) }
+    output  { Faker::Date.forward(days: 10) }
     paid       { Faker::Boolean.boolean }
   end
 end
