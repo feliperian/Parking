@@ -21,7 +21,7 @@ RSpec.describe 'Parking API', type: :request do
       before { post '/parking', params: { plate: 'MIAMI' } }
 
       it 'not creates a registry' do
-        expect(json['detail']).to eq('Invalid plate')
+        expect(json['detail']).to eq('It must be like AAA-9999')
       end
 
       it 'returns status code 400' do
