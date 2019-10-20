@@ -2,8 +2,8 @@ version: '3.3'
 services:
   parking:
     build: .
-    command: rails server -b 0.0.0.0
     volumes:
+      # This volume is only for development
       - ./src:/usr/src
     ports:
       - 80:3000
@@ -15,6 +15,6 @@ services:
     depends_on:
       - db
   db:
-    image: postgres:9.6.15
+    image: postgres:latest
     volumes:
-      - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+      - ./init-postgres-db.sh:/docker-entrypoint-initdb.d/init-postgres-db.sh

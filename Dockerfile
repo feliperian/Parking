@@ -14,3 +14,7 @@ COPY ./src/ /usr/src
 WORKDIR /usr/src
 
 RUN bundle install
+
+ENTRYPOINT ["/usr/src/docker-entrypoint.sh"]
+
+CMD ["rails", "server", "-b", "0.0.0.0"]

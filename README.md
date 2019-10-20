@@ -17,10 +17,6 @@ This is a project built with Rails.
 
 ## Development
 
-Running tests:
-
-```docker-compose run parking rails db:migrate```
-
 Start server:
 
 ```docker-compose up```
