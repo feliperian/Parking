@@ -57,7 +57,7 @@ Receive the plate registry on the parking
 ```{ id: 1, time: 'less than a minute', paid: false, left: false }```
 
 #### PUT /parking/:id/pay
-Pay off your debt
+Pay off parking
 
 ```{ id: 1, time: '4 minutes', paid: true, left: false }```
 
@@ -67,6 +67,6 @@ Get out of the parking
 ```{ id: 1, time: '5 minutes', paid: true, left: true }```
 
 #### GET /parking/:plate
-Check you history
+History of the plate
 
 ```[{ id: 1, time: '5 minutes', paid: true, left: true }]```
