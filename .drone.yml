@@ -1,0 +1,46 @@
+kind: pipeline
+name: parking
+
+steps:
+- name: tagging
+  image: alpine/git
+  commands:
+    - git describe --tags > .tags
+
+- name: build
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: REGISTRY_USERNAME
+    password:
+      from_secret: REGISTRY_PASSWORD
+    repo: 
+      from_secret: IMAGE_REPOSITORY
+    registry: 
+      from_secret: REGISTRY_HOST
+
+    dockerfile: Dockerfile
+
+- name: notify
+  image: plugins/slack
+  settings:
+    webhook: 
+      from_secret: SLACK_HOOK
+    channel: drone_io
+    link_names: true
+    template: >
+      {{#success build.status}}{{commit.author.name}} 
+        {{repo.name}} Build as success on tag {{tag}} by {{build.author}}.
+      {{else}}
+        {{repo.name}} Build fail on {{tag}} by {{build.author}}. details {{build.link}}
+      {{/success}}
+  when:
+    status:
+      - success
+      - failure 
+
+trigger:
+ branch:
+  - master
+ event:
+  - tag

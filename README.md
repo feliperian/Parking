@@ -17,6 +17,19 @@ This is a project built with:
 - [Ruby](https://www.ruby-lang.org/) 2.6.5
 - [Rails](https://rubyonrails.org/) 5.2.3
 
+## Environments
+
+```
+# Use development for the developer server
+RAILS_ENV: production
+
+# PostgreSQL Environments
+PARKINGAPI_DATABASE_USERNAME: postgres
+PARKINGAPI_DATABASE_PASSWORD: postgres
+PARKINGAPI_DATABASE_HOST: db
+PARKINGAPI_DATABASE_PORT: 5432
+```
+
 ## Development
 
 Start server:
