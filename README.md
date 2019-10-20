@@ -23,4 +23,4 @@ Start server:
 
 Running tests:
 
-```docker-compose run parking bundle exec rspec```
+```sudo docker-compose run parking env RAILS_ENV=test bundle exec rspec```
