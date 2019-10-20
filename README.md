@@ -26,4 +26,5 @@ Start server:
 ```docker-compose up```
 
 Running tests:
+
 ```docker-compose run parking bundle exec rspec```
