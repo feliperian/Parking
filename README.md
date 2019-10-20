@@ -33,6 +33,17 @@ PARKINGAPI_DATABASE_HOST: db
 PARKINGAPI_DATABASE_PORT: 5432
 ```
 
+## Drone CI
+Secrets:
+
+```
+REGISTRY_USERNAME # Username to acess registry
+REGISTRY_PASSWORD # Password to acess registry
+IMAGE_REPOSITORY # Repository fo the project in drone
+REGISTRY_HOST # Drone host
+SLACK_HOOK # Slack hook to notify
+```
+
 ## Development
 
 Start server:
