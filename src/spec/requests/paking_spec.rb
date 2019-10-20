@@ -3,13 +3,13 @@ require 'rails_helper'
 RSpec.describe 'Parking API', type: :request do
   # Test suite for POST /parking
   describe 'POST /parking' do
-    let(:valid_attributes) { { plate: 'FAA-1234' } }
+    let(:parking_to_enter) { build(:parking) }
 
     context 'when the request is valid' do
-      before { post '/parking', params: valid_attributes }
+      before { post '/parking', params: { plate: parking_to_enter.plate } }
 
       it 'creates a registry' do
-        expect(json['id']).to be_a(Integer)
+        expect(JSON.parse(response.body)['id']).to be_a(Integer)
       end
 
       it 'returns status code 201' do
@@ -21,14 +21,26 @@ RSpec.describe 'Parking API', type: :request do
       before { post '/parking', params: { plate: 'MIAMI' } }
 
       it 'not creates a registry' do
-        expect(json['detail']).to eq('It must be like AAA-9999')
+        expect(JSON.parse(response.body)['plate'][0]).to eq('It must be like AAA-9999.')
       end
 
-      it 'returns status code 400' do
-        expect(response).to have_http_status(400)
+      it 'returns status code 422' do
+        expect(response).to have_http_status(422)
       end
     end
 
+    context 'when request to input without output' do
+      let(:parking_in) { create(:parking, output: nil) }
+      before { post '/parking', params: { plate: parking_in.plate } }
+
+      it 'not creates a registry' do
+        expect(JSON.parse(response.body)['detail']).to eq('This plate is already in')
+      end
+
+      it 'returns status code 403' do
+        expect(response).to have_http_status(403)
+      end
+    end
   end
 
   # Test suite for PUT /parking/:id/out
@@ -39,7 +51,7 @@ RSpec.describe 'Parking API', type: :request do
       before { put "/parking/#{parking_paid.id}/out" }
 
       it 'registry the exit' do
-        expect(json['output']).to be_a(String)
+        expect(JSON.parse(response.body)['output']).to be_a(String)
       end
 
       it 'returns status code 200' do
@@ -53,7 +65,7 @@ RSpec.describe 'Parking API', type: :request do
       before { put "/parking/#{parking_pending.id}/out" }
 
       it 'not registry the exit' do
-        expect(json['detail']).to eq('Payment is pending')
+        expect(JSON.parse(response.body)['detail']).to eq('Payment is pending')
       end
 
       it 'returns status code 400' do
@@ -71,7 +83,7 @@ RSpec.describe 'Parking API', type: :request do
       before { put "/parking/#{parking_pending.id}/pay" }
 
       it 'registry the payment' do
-        expect(json['paid']).to eq(true)
+        expect(JSON.parse(response.body)['paid']).to eq(true)
       end
 
       it 'returns status code 200' do
@@ -85,7 +97,7 @@ RSpec.describe 'Parking API', type: :request do
       before { put "/parking/#{parking_paid.id}/pay" }
 
       it 'not registry the payment' do
-        expect(json['detail']).to eq('Payment was made previously')
+        expect(JSON.parse(response.body)['detail']).to eq('Payment was made previously')
       end
 
       it 'returns status code 200' do
@@ -106,8 +118,8 @@ RSpec.describe 'Parking API', type: :request do
       before { get "/parking/#{parking.plate}" }
 
       it 'returns registry' do
-        expect(json).not_to be_empty
-        expect(json.size).to eq(5)
+        expect(response.body).not_to be_empty
+        expect(JSON.parse(response.body).size).to eq(5)
       end
 
       it 'returns status code 200' do
@@ -121,7 +133,7 @@ RSpec.describe 'Parking API', type: :request do
       before { get "/parking/#{plate}" }
 
       it 'returns empty' do
-        expect(json).to be_empty
+        expect(JSON.parse(response.body)['detail']).to be_a('Not Found')
       end
 
       it 'returns status code 404' do

@@ -6,12 +6,16 @@ class ParkingController < ApplicationController
     # end
 
     def create
-        parking = Parking.new(plate: params['plate'])
-        if parking.save
-            render json: {status: 'SUCCESS', message:'Created plate input', id: parking.id },status: :ok
+        if Parking.where(plate: params['plate'], output: nil).exists?
+            render json: { detail: 'This plate is already in' }, status: :forbidden
         else
-            render json: {status: 'ERROR', message: parking.errors.plate },status: :unprocessable_entity
+            parking = Parking.new(plate: params['plate'])
+            parking.input = Time.now
+            if parking.save
+                render json: parking, status: :created
+            else
+                render json: parking.errors, status: :unprocessable_entity
+            end
         end
     end
-
 end
