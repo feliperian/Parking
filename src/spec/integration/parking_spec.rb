@@ -35,7 +35,7 @@ describe 'Parking API' do
   end
 
   path '/parking/{id}/pay' do
-    get 'Pay off parking' do
+    put 'Pay off parking' do
       tags 'Parking'
       produces 'application/json'
       parameter name: :id, :in => :path, :type => :string
@@ -66,7 +66,7 @@ describe 'Parking API' do
 	end
 
   path '/parking/{id}/out' do
-    get 'Get out of the parking' do
+    put 'Get out of the parking' do
       tags 'Parking'
       produces 'application/json'
       parameter name: :id, :in => :path, :type => :string

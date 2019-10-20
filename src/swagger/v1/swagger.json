@@ -56,7 +56,7 @@
       }
     },
     "/parking/{id}/pay": {
-      "get": {
+      "put": {
         "summary": "Pay off parking",
         "tags": [
           "Parking"
@@ -109,7 +109,7 @@
       }
     },
     "/parking/{id}/out": {
-      "get": {
+      "put": {
         "summary": "Get out of the parking",
         "tags": [
           "Parking"
